@@ -28,8 +28,11 @@ def is_fahrenheit(location):
 # if it appears in both then if raw temp  > 45 or 50 (or some other magic number) then accept it as fahrenheit. Else there isn't really 
 # much you can do and to make it deterministic I would just say if above 20, call it fahrenheit.
 # This can introduce consistent errors though and give the pretence of a trend. Another way would be
-# to say its fahrenheit if it is even, this however doesn't take into account that higher numbers 
-# are probably more likely to be fahrenheit
+# to say its fahrenheit if it is even (so that its a 50/50, or if different odds are required then some other deterministic algorithm, which I have an idea for), 
+# this however doesn't take into account that higher numbers are probably more likely to be fahrenheit
+# and as such may not preserve average/expected tshirt/jumper use
+
+
 
 
 
@@ -41,11 +44,11 @@ def in_celsius(location, temp):
 
 
 
-locs_raw_temps = list(zip(df['location'], df['temperature']))
+locs_raw_temps = list( zip(df['location'], df['temperature']) )
 
 
 
-
+# there was a minor gotcha since it didnt specify which to use when temp exactly 15 but the test case given cleared that up
 clothes = ['tshirt' if in_celsius(loc, temp) >= 15 else 'jumper' 
            for loc, temp in locs_raw_temps]
 
